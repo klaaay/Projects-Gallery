@@ -1,0 +1,43 @@
+.ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected,
+.ant-menu.ant-menu-dark .ant-menu-item-selected {
+  background-color: #189183 !important;
+}
+
+.ant-layout-content {
+  background: white;
+}
+
+.ant-menu-dark.ant-menu-horizontal {
+  border-bottom: 0;
+  line-height: 64px;
+}
+
+.ant-layout-header {
+  background: #001529;
+  padding: 0 50px;
+  height: 64px;
+  line-height: 64px;
+  padding-right: 0 !important;
+}
+
+.head-search {
+  width: 200px !important;
+  float: right !important;
+  margin: 16px !important;
+}
+
+.head-search > input {
+  background-color: #0b2b49;
+  border: 1px solid #0b2b49;
+  border-radius: 4px;
+  color: white;
+}
+
+.head-search i {
+  color: #ccc !important;
+}
+
+.ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled) {
+  border-color: transparent !important;
+}
+/*# sourceMappingURL=head.css.map */

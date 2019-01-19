@@ -1,0 +1,13 @@
+#root {
+  height: 100%;
+  overflow: hidden;
+}
+
+#root .App {
+  height: 100%;
+}
+
+#root .App .ant-layout {
+  height: 100%;
+}
+/*# sourceMappingURL=index.css.map */

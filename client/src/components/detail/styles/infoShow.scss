@@ -1,0 +1,22 @@
+.infoImg {
+    width: 100%;
+    // height: 400px;
+    box-shadow: 0 0 10px #2F2F2F;
+}
+
+#infoRow {
+    // height: 550px;
+    background-color: rgb(53, 107, 156);
+
+    .title {
+        color: white;
+        text-align: left;
+        padding-bottom: 20px;
+    }
+
+    .description {
+        color: white;
+        line-height: 30px;
+        text-indent: 2em;
+    }
+}

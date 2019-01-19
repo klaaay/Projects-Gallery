@@ -1,0 +1,17 @@
+.homeCarousel {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: center !important;
+      -ms-flex-pack: center !important;
+          justify-content: center !important;
+  -webkit-box-align: center !important;
+      -ms-flex-align: center !important;
+          align-items: center !important;
+}
+
+.homeCarousel-img {
+  height: 260px;
+  width: 100%;
+}
+/*# sourceMappingURL=homeCarousel.css.map */

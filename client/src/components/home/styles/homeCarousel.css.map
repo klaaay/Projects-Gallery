@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAC;EACV,OAAO,EAAE,eAAe;EACxB,eAAe,EAAE,iBAAiB;EAClC,WAAW,EAAE,iBAAiB;CACjC;;AAED,AAAA,iBAAiB,CAAC;EACd,MAAM,EAAE,KAAK;EACb,KAAK,EAAE,IAAI;CACd",
+    "sources": [
+        "homeCarousel.scss"
+    ],
+    "names": [],
+    "file": "homeCarousel.css"
+}

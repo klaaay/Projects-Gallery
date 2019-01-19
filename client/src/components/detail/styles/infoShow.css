@@ -1,0 +1,22 @@
+.infoImg {
+  width: 100%;
+  -webkit-box-shadow: 0 0 10px #2F2F2F;
+          box-shadow: 0 0 10px #2F2F2F;
+}
+
+#infoRow {
+  background-color: #356b9c;
+}
+
+#infoRow .title {
+  color: white;
+  text-align: left;
+  padding-bottom: 20px;
+}
+
+#infoRow .description {
+  color: white;
+  line-height: 30px;
+  text-indent: 2em;
+}
+/*# sourceMappingURL=infoShow.css.map */
