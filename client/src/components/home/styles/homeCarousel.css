@@ -10,6 +10,15 @@
           align-items: center !important;
 }
 
+.homeCarousel a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .homeCarousel-img {
   height: 260px;
   width: 100%;

@@ -9,7 +9,7 @@ import projectDetail from "../../utils/projectDetail";
 
 import InfoShow from "./infoShow";
 import ImgShow from "./imgShow";
-import PptShow from "./pptShow";
+import PdfShow from "./pdfShow";
 import VideoShow from "./videoShow";
 
 import $ from "jquery";
@@ -81,7 +81,7 @@ export default class details extends Component {
   renderTabs = () => {
     let parsed = queryString.parse(this.props.location.search);
     if (this.state.data["classify" + parsed.classify]) {
-      const { info, pic, video, ppt } = projectDetail(
+      const { info, pic, video, pdf } = projectDetail(
         this.state.data["classify" + parsed.classify],
         parsed.title
       );
@@ -110,7 +110,7 @@ export default class details extends Component {
               <VideoShow video={video} />
             </TabPane>
             <TabPane tab="演示文稿" key="4">
-              <PptShow ppt={ppt} />
+              <PdfShow pdf={pdf} />
             </TabPane>
           </Tabs>
         </StickyContainer>

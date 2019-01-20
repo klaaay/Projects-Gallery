@@ -4,12 +4,17 @@
     overflow: hidden;
 }
 
-.imgShowRow{
-    // height: 620px;
-}
-
 .imgGallery {
     width: 100%;
-    // height: 580px;
     padding-bottom: 20px;
+}
+
+.image-gallery-image {
+    display: flex;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+
+    img {
+        width: auto !important;
+    }
 }

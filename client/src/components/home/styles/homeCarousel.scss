@@ -2,6 +2,11 @@
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
+
+    a {
+        display: flex;
+        justify-content: center;
+    }
 }
 
 .homeCarousel-img {

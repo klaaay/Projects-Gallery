@@ -8,4 +8,18 @@
   width: 100%;
   padding-bottom: 20px;
 }
+
+.image-gallery-image {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.image-gallery-image img {
+  width: auto !important;
+}
 /*# sourceMappingURL=imgShow.css.map */

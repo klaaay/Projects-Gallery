@@ -2,7 +2,9 @@ const expree = require("express");
 const fs = require("fs");
 const app = expree();
 
-const { DOMAIN } = require("./config")
+const {
+    DOMAIN
+} = require("./config")
 
 var navbarInfo = [];
 
@@ -64,7 +66,7 @@ classifys.sort().forEach(async (classify, index_classify) => {
         var file_items = fs.readdirSync(`./data/${classify}/${project}`);
         var pic = [];
         var video = [];
-        var ppt = "";
+        var pdf = [];
         if (file_items.includes("img")) {
             pic = fs.readdirSync(`./data/${classify}/${project}/img`).filter(img_item => (img_item.split(".")[0] !== "cover" && img_item !== "thumbs")).map(img_item => ({
                 original: `${DOMAIN}/projectShowServer/data/${classify}/${project}/img/${img_item}`,
@@ -80,8 +82,11 @@ classifys.sort().forEach(async (classify, index_classify) => {
                 thumb: `${DOMAIN}/projectShowServer/data/${classify}/${project}/video/${video_item.split(".")[0]}.jpg`
             }));
         }
-        if (file_items.includes('ppt')) {
-            ppt = fs.readFileSync(`./data/${classify}/${project}/ppt/ppt.txt`).toString();
+        if (file_items.includes('pdf')) {
+            pdf = fs.readdirSync(`./data/${classify}/${project}/pdf`).filter(pdf_item => (pdf_item.split(".")[1] === "jpg")).map(pdf_item => ({
+                pdf: `${DOMAIN}/projectShowServer/data/${classify}/${project}/pdf/${pdf_item.split(".")[0]}.pdf`,
+                thumb: `${DOMAIN}/projectShowServer/data/${classify}/${project}/pdf/${pdf_item.split(".")[0]}.jpg`
+            }));
         }
         var project_item = {
             info: {
@@ -93,7 +98,7 @@ classifys.sort().forEach(async (classify, index_classify) => {
             },
             pic,
             video,
-            ppt
+            pdf
         }
         projectsData['classify' + classify.slice(0, 1)].push(project_item);
     })
@@ -106,4 +111,6 @@ app.use('/', (req, res, next) => {
     })
 })
 
-app.listen(3030)
+app.listen(3030, () => {
+    console.log(`app listened on 3030`)
+})
