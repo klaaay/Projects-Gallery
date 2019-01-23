@@ -8,6 +8,7 @@
   -webkit-box-align: center !important;
       -ms-flex-align: center !important;
           align-items: center !important;
+  background: #253646;
 }
 
 .homeCarousel a {
@@ -17,6 +18,12 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.homeCarousel .homeCarousel-img {
+  width: 60%;
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .homeCarousel-img {

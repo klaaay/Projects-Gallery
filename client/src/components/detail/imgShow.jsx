@@ -13,7 +13,7 @@ export default class imgShow extends Component {
         items={this.props.pic}
         showPlayButton={false}
         showFullscreenButton={false}
-        autoPlay={false}
+        autoPlay={true}
         onImageLoad={() => {
           $(".image-gallery-image>img").css("height", $(window).height() - 240);
         }}

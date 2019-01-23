@@ -1,21 +1,23 @@
-const expree = require("express");
+const express = require("express");
 const fs = require("fs");
-const app = expree();
+const app = express();
 
 const {
-    DOMAIN
+    DOMAIN,
+    SERVER_PORT,
+    INIT_URL
 } = require("./config")
 
 var navbarInfo = [];
+var projectsData = {};
 
-var projectsData = {
-    classify0: [],
-    classify1: [],
-    classify2: [],
-    classify3: [],
-    classify4: [],
-    classify5: []
+var projectsDataLength = fs.readdirSync("./data").length;
+
+for (let i = 0; i < projectsDataLength; i++) {
+    projectsData["classify" + i] = [];
 }
+
+app.use('/data', express.static('data'));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -30,33 +32,10 @@ app.use((req, res, next) => {
 var classifys = fs.readdirSync("./data");
 
 var navbarInfo = classifys.sort().map((item, index) => {
-    var iconName = "";
-    switch (item) {
-        case "0智能大数据":
-            iconName = "database";
-            break;
-        case "1智能控制":
-            iconName = "tool";
-            break;
-        case "2智慧电力":
-            iconName = "robot";
-            break;
-        case "3智能环境":
-            iconName = "global";
-            break;
-        case "4智慧健康":
-            iconName = "heart";
-            break;
-        case "5区块链":
-            iconName = "sliders";
-            break;
-        default:
-            break;
-    }
     return {
         text: item.slice(1),
-        icon: `${DOMAIN}/projectShowServer/data/${item}/${item.slice(1)}.png`,
-        iconName
+        index: parseFloat(item.slice(0, 1)),
+        icon: `${DOMAIN}:${SERVER_PORT}/${INIT_URL}/${item}/${item.slice(1)}.png`,
     }
 })
 
@@ -69,8 +48,8 @@ classifys.sort().forEach(async (classify, index_classify) => {
         var pdf = [];
         if (file_items.includes("img")) {
             pic = fs.readdirSync(`./data/${classify}/${project}/img`).filter(img_item => (img_item.split(".")[0] !== "cover" && img_item !== "thumbs")).map(img_item => ({
-                original: `${DOMAIN}/projectShowServer/data/${classify}/${project}/img/${img_item}`,
-                thumbnail: `${DOMAIN}/projectShowServer/data/${classify}/${project}/img/thumbs/${img_item}`,
+                original: `${DOMAIN}:${SERVER_PORT}/${INIT_URL}/${classify}/${project}/img/${img_item}`,
+                thumbnail: `${DOMAIN}:${SERVER_PORT}/${INIT_URL}/${classify}/${project}/img/thumbs/${img_item}`,
                 originalClass: 'imgGallery',
                 originalTitle: img_item.split('.')[0],
                 thumbnailTitle: img_item.split('.')[0]
@@ -78,21 +57,23 @@ classifys.sort().forEach(async (classify, index_classify) => {
         }
         if (file_items.includes('video')) {
             video = fs.readdirSync(`./data/${classify}/${project}/video`).filter(video_item => (video_item.split(".")[1] === "jpg")).map(video_item => ({
-                video: `${DOMAIN}/projectShowServer/data/${classify}/${project}/video/${video_item.split(".")[0]}.mp4`,
-                thumb: `${DOMAIN}/projectShowServer/data/${classify}/${project}/video/${video_item.split(".")[0]}.jpg`
+                video: `${DOMAIN}:${SERVER_PORT}/${INIT_URL}/${classify}/${project}/video/${video_item.split(".")[0]}.mp4`,
+                thumb: `${DOMAIN}:${SERVER_PORT}/${INIT_URL}/${classify}/${project}/video/${video_item.split(".")[0]}.jpg`,
+                alt: video_item.split(".")[0]
             }));
         }
         if (file_items.includes('pdf')) {
             pdf = fs.readdirSync(`./data/${classify}/${project}/pdf`).filter(pdf_item => (pdf_item.split(".")[1] === "jpg")).map(pdf_item => ({
-                pdf: `${DOMAIN}/projectShowServer/data/${classify}/${project}/pdf/${pdf_item.split(".")[0]}.pdf`,
-                thumb: `${DOMAIN}/projectShowServer/data/${classify}/${project}/pdf/${pdf_item.split(".")[0]}.jpg`
+                pdf: `${DOMAIN}:${SERVER_PORT}/${INIT_URL}/${classify}/${project}/pdf/${pdf_item.split(".")[0]}.pdf`,
+                thumb: `${DOMAIN}:${SERVER_PORT}/${INIT_URL}/${classify}/${project}/pdf/${pdf_item.split(".")[0]}.jpg`,
+                alt: pdf_item.split(".")[0]
             }));
         }
         var project_item = {
             info: {
                 title: `${project}`,
                 description: description.toString(),
-                pic: `${DOMAIN}/projectShowServer/data/${classify}/${project}/img/cover.jpg`,
+                pic: `${DOMAIN}:${SERVER_PORT}/${INIT_URL}/${classify}/${project}/img/cover.jpg`,
                 page: Math.floor(index_project / 8) + 1,
                 classify: parseFloat(classify.slice(0, 1))
             },
@@ -111,6 +92,6 @@ app.use('/', (req, res, next) => {
     })
 })
 
-app.listen(3030, () => {
-    console.log(`app listened on 3030`)
+app.listen(SERVER_PORT, () => {
+    console.log(`app listened on ${SERVER_PORT}`)
 })

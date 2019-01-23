@@ -14,20 +14,12 @@ import VideoShow from "./videoShow";
 
 import $ from "jquery";
 import axios from "axios";
+import config from "../../config";
 
 import "./styles/tabs.css";
 import "./styles/breadcrumb.css";
 
 const TabPane = Tabs.TabPane;
-
-const navbarArray = [
-  "智能大数据",
-  "智能控制",
-  "智慧电力",
-  "智能环境",
-  "智慧健康",
-  "区块链"
-];
 
 const renderTabBar = (props, DefaultTabBar) => (
   <Sticky bottomOffset={80}>
@@ -42,13 +34,26 @@ const renderTabBar = (props, DefaultTabBar) => (
 const queryString = require("query-string");
 export default class details extends Component {
   state = {
-    data: {}
+    data: {},
+    classifyName: "",
+    title: ""
   };
 
   componentDidMount = () => {
-    axios.get("http://119.23.201.7:3030/").then(res => {
+    const { classify, title } = queryString.parse(this.props.location.search);
+    axios.get(config.INFO_API).then(res => {
       this.setState({
-        data: res.data
+        data: res.data,
+        classifyName: res.data.navbarInfo
+          .map(item => {
+            if (item.index === parseFloat(classify)) {
+              return item;
+            } else {
+              return null;
+            }
+          })
+          .filter(item => item !== null)[0].text,
+        title: title
       });
     });
   };
@@ -65,14 +70,13 @@ export default class details extends Component {
   );
 
   renderBreadcrumb = () => {
-    let { title, classify } = queryString.parse(this.props.location.search);
     return (
       <Breadcrumb className="my-breadcrumb">
         <Breadcrumb.Item className="my-breadcrumb-item">
-          {navbarArray[classify]}
+          {this.state.classifyName}
         </Breadcrumb.Item>
         <Breadcrumb.Item className="my-breadcrumb-item">
-          {title}
+          {this.state.title}
         </Breadcrumb.Item>
       </Breadcrumb>
     );
@@ -125,7 +129,6 @@ export default class details extends Component {
         <Content>
           {this.renderBackBtn()}
           {this.renderBreadcrumb()}
-          {/* <Divider style={{ margin: "0" }} /> */}
           {this.renderTabs()}
         </Content>
       </Layout>

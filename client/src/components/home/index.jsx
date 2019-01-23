@@ -1,14 +1,5 @@
 import React, { Component } from "react";
-import {
-  Layout,
-  Menu,
-  Icon,
-  Row,
-  Col,
-  Pagination,
-  Carousel,
-  Input
-} from "antd";
+import { Layout, Menu, Row, Col, Pagination, Carousel, Input } from "antd";
 import { Link } from "react-router-dom";
 
 import Head from "../layouts/head";
@@ -21,6 +12,7 @@ import pageSelector from "../../utils/pageSelector";
 
 import $ from "jquery";
 import axios from "axios";
+import config from "../../config";
 
 import "./styles/head.css";
 import "./styles/homeCarousel.css";
@@ -58,7 +50,7 @@ export default class main extends Component {
   };
 
   componentDidMount = () => {
-    axios.get("http://119.23.201.7:3030/").then(res => {
+    axios.get(config.INFO_API).then(res => {
       data = res.data;
       this.setState({
         originalProjects: data.classify0,
@@ -131,7 +123,11 @@ export default class main extends Component {
         >
           {this.state.navbarInfo.map((item, index) => (
             <Menu.Item key={index + 1}>
-              <Icon type={item.iconName} />
+              <img
+                alt=""
+                src={item.icon}
+                style={{ paddingRight: "5px", width: "20px", height: "16px" }}
+              />
               {item.text}
             </Menu.Item>
           ))}

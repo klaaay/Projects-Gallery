@@ -17,15 +17,10 @@ export default class pdfShow extends Component {
         <embed
           src={this.props.pdf[0].pdf}
           type=""
-          style={{ width: "100%", border: "none" }}
           className="myPdf-show"
         />
         <div
           className="myPdf-gallery"
-          style={{
-            display: "flex",
-            justifyContent: "center"
-          }}
         >
           {this.props.pdf.map((item, index) => (
             <img
@@ -34,17 +29,11 @@ export default class pdfShow extends Component {
               className={
                 index === 0 ? "gallery-img gallery-img-selected" : "gallery-img"
               }
-              alt=""
+              alt={item.alt}
               onClick={e => {
                 $(".myPdf-show").attr("src", item.pdf);
                 $(".gallery-img").removeClass("gallery-img-selected");
                 $(e.target).addClass("gallery-img-selected");
-              }}
-              style={{
-                width: "90px",
-                height: "90px",
-                margin: "10px",
-                marginTop: "20px"
               }}
             />
           ))}
