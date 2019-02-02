@@ -22,4 +22,10 @@
 .image-gallery-image img {
   width: auto !important;
 }
+
+@media (max-width: 500px) {
+  .image-gallery-image img {
+    width: 100% !important;
+  }
+}
 /*# sourceMappingURL=imgShow.css.map */

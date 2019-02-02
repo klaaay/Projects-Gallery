@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Layout, Menu, Row, Col, Pagination, Carousel, Input } from "antd";
+import {
+  Layout,
+  Menu,
+  Icon,
+  Pagination,
+  Carousel,
+  Input,
+  AutoComplete
+} from "antd";
+
 import { Link } from "react-router-dom";
 
 import Head from "../layouts/head";
@@ -7,18 +16,14 @@ import Content from "../layouts/content";
 
 import Card from "./card";
 
-import groupArray from "../../utils/groupArray";
-import pageSelector from "../../utils/pageSelector";
-
 import $ from "jquery";
 import axios from "axios";
 import config from "../../config";
 
+import "./styles/index.css";
 import "./styles/head.css";
 import "./styles/homeCarousel.css";
-import "./styles/homePagination.css";
 
-const Search = Input.Search;
 let data;
 
 export default class main extends Component {
@@ -50,12 +55,27 @@ export default class main extends Component {
   };
 
   componentDidMount = () => {
+    document.body.addEventListener("touchstart", function() {});
+   
     axios.get(config.INFO_API).then(res => {
       data = res.data;
+      let allProjects = [];
+      for (let i = 0; i < Object.keys(data).length; i++) {
+        if (Object.keys(data)[i] !== "navbarInfo") {
+          allProjects = allProjects.concat(data[Object.keys(data)[i]]);
+        }
+      }
+      let dataSource = allProjects.map(item => {
+        return item.info.title;
+      });
+      dataSource.unshift("未搜索");
       this.setState({
-        originalProjects: data.classify0,
-        filterProjects: data.classify0,
-        navbarInfo: data.navbarInfo
+        allInfo: data,
+        allProjects: allProjects,
+        selectedClassifyProjects: data.classify0,
+        navbarInfo: data.navbarInfo,
+        dataSource: dataSource,
+        filterDataSource: dataSource
       });
     });
 
@@ -77,52 +97,61 @@ export default class main extends Component {
   };
 
   state = {
+    allInfo: {},
     navbarInfo: [],
-    originalProjects: [],
-    filterProjects: [],
+    allProjects: [],
+    selectedClassifyProjects: [],
+    showedProjects: [],
     page: 1,
     filter: false,
-    classify: 0
+    classify: 0,
+    dataSource: [],
+    filterDataSource: []
+  };
+
+  handleSearch = value => {
+    this.setState({
+      filterDataSource: this.state.dataSource.filter(item => {
+        return item.search(value) !== -1;
+      })
+    });
   };
 
   onSearch = value => {
-    let originalProjects = this.state.originalProjects;
-    if (value !== "") {
-      let filterProjects = this.state.originalProjects
-        .filter(item => {
-          return item.info.title.search(value) !== -1;
-        })
-        .splice(0, 8);
+    if (value !== "未搜索") {
       this.setState({
-        filterProjects: filterProjects,
-        filter: true
+        filterDataSource: [],
+        selectedClassifyProjects: this.state.allProjects.filter(
+          item => item.info.title === value
+        )
       });
     } else {
       this.setState({
-        filterProjects: originalProjects,
-        filter: false
+        selectedClassifyProjects: this.state.allInfo[
+          "classify" + this.state.classify
+        ]
       });
     }
   };
 
   renderNavbar = () => {
+    const { filterDataSource } = this.state;
     return (
       <Head id="home-head">
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={["0"]}
           onSelect={({ key }) => {
             this.setState({
-              classify: key - 1,
-              originalProjects: data["classify" + (key - 1)],
-              filterProjects: data["classify" + (key - 1)],
+              classify: key,
+              selectedClassifyProjects: data["classify" + key],
               page: 1
             });
           }}
         >
           {this.state.navbarInfo.map((item, index) => (
-            <Menu.Item key={index + 1}>
+            <Menu.Item key={index}>
               <img
                 alt=""
                 src={item.icon}
@@ -132,11 +161,27 @@ export default class main extends Component {
             </Menu.Item>
           ))}
           <React.Fragment>
-            <Search
-              placeholder="输入想要查找的项目"
-              onSearch={this.onSearch}
+            <AutoComplete
+              dataSource={filterDataSource}
               className="head-search"
-            />
+              style={{ width: 200 }}
+              onSelect={this.onSearch}
+              onChange={value => {
+                this.setState({
+                  filterDataSource: this.state.dataSource.filter(item => {
+                    return item.search(value) !== -1;
+                  })
+                });
+              }}
+              onBlur={() => {}}
+              placeholder="输入想要查找的项目"
+            >
+              <Input
+                suffix={
+                  <Icon type="search" className="certain-category-icon" />
+                }
+              />
+            </AutoComplete>
           </React.Fragment>
         </Menu>
       </Head>
@@ -145,7 +190,8 @@ export default class main extends Component {
 
   renderCarousel = () => (
     <Carousel autoplay>
-      {this.state.originalProjects
+      {this.state.allProjects
+        .sort((a, b) => b.info.birthtime - a.info.birthtime)
         .concat()
         .splice(0, 4)
         .map((item, index) => {
@@ -153,7 +199,7 @@ export default class main extends Component {
             <div className="homeCarousel" key={index}>
               <Link
                 to={`/detail?title=${item.info.title}&classify=${
-                  this.state.classify
+                  item.info.classify
                 }`}
                 style={{ width: "100%" }}
               >
@@ -165,28 +211,22 @@ export default class main extends Component {
     </Carousel>
   );
 
-  renderItem = filterProjects => {
-    return groupArray(filterProjects, 4).map((array, index) => {
-      return (
-        <Row gutter={16} style={{ margin: "30px" }} key={array[0].info.title}>
-          {array.map((item, index) => (
-            <Col span={6} key={index}>
-              <Link
-                to={`/detail?title=${item.info.title}&classify=${
-                  this.state.classify
-                }`}
-              >
-                <Card
-                  title={item.info.title}
-                  pic={item.info.pic}
-                  description={item.info.description}
-                />
-              </Link>
-            </Col>
-          ))}
-        </Row>
-      );
-    });
+  renderItem = selectedClassifyProjects => {
+    return selectedClassifyProjects
+      .filter(item => item.info.page === this.state.page)
+      .map((item, key) => (
+        <Link
+          className="project-item"
+          key={item.info.title}
+          to={`/detail?title=${item.info.title}&classify=${item.info.classify}`}
+        >
+          <Card
+            title={item.info.title}
+            pic={item.info.pic}
+            description={item.info.description}
+          />
+        </Link>
+      ));
   };
 
   render() {
@@ -194,18 +234,15 @@ export default class main extends Component {
       <Layout>
         {this.renderNavbar()}
         <Content>
-          <div>
-            {this.renderCarousel()}
-            {this.renderItem(
-              this.state.filter
-                ? this.state.filterProjects
-                : pageSelector(this.state.filterProjects, this.state.page)
-            )}
+          <div>{this.renderCarousel()}</div>
+          <div className="projects">
+            {this.renderItem(this.state.selectedClassifyProjects)}
           </div>
           <Pagination
             defaultCurrent={this.state.page}
             pageSize={8}
-            total={this.state.filterProjects.length}
+            total={this.state.selectedClassifyProjects.length}
+            hideOnSinglePage={true}
             className="home-pagination"
             onChange={value => {
               this.setState({

@@ -26,10 +26,10 @@
   margin: 16px !important;
 }
 
-.head-search > input {
-  background-color: #0b2b49;
-  border: 1px solid #0b2b49;
-  border-radius: 4px;
+.head-search input {
+  background-color: #0b2b49 !important;
+  border: 4px solid #0b2b49 !important;
+  border-radius: 3px !important;
   color: white;
 }
 
@@ -39,5 +39,14 @@
 
 .ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled) {
   border-color: transparent !important;
+}
+
+@media (max-width: 968px) {
+  .head-search {
+    display: none !important;
+  }
+  .ant-menu-vertical .head-search {
+    display: inline-block !important;
+  }
 }
 /*# sourceMappingURL=head.css.map */

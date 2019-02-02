@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,gBAAgB,CAAC;EACb,QAAQ,EAAE,gBAAgB;EAC1B,KAAK,EAAE,eAAe;EACtB,MAAM,EAAE,eAAe;CAC1B",
-    "sources": [
-        "homePagination.scss"
-    ],
-    "names": [],
-    "file": "homePagination.css"
-}

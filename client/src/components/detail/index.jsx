@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Layout, Tabs, Button, Breadcrumb } from "antd";
+import { Layout, Tabs, Button, Breadcrumb, Icon } from "antd";
 import { StickyContainer, Sticky } from "react-sticky";
 
 import Content from "../layouts/content";
@@ -72,6 +72,14 @@ export default class details extends Component {
   renderBreadcrumb = () => {
     return (
       <Breadcrumb className="my-breadcrumb">
+        <Breadcrumb.Item
+          className="back-icon"
+          onClick={() => {
+            this.props.history.push("/");
+          }}
+        >
+          <Icon type="home" />
+        </Breadcrumb.Item>
         <Breadcrumb.Item className="my-breadcrumb-item">
           {this.state.classifyName}
         </Breadcrumb.Item>

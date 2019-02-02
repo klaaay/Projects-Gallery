@@ -4,11 +4,15 @@
   background: #001529 !important;
 }
 
-.my-breadcrumb-item {
+.my-breadcrumb .back-icon .anticon-home {
   color: white !important;
 }
 
-.ant-breadcrumb-separator {
+.my-breadcrumb .my-breadcrumb-item {
+  color: white !important;
+}
+
+.my-breadcrumb .ant-breadcrumb-separator {
   color: white !important;
 }
 
@@ -22,5 +26,11 @@
   border-radius: 0 !important;
   padding: 0 25px !important;
   color: white !important;
+}
+
+@media (max-width: 500px) {
+  .backBtn {
+    display: none !important;
+  }
 }
 /*# sourceMappingURL=breadcrumb.css.map */

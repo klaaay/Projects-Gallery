@@ -17,4 +17,10 @@
     img {
         width: auto !important;
     }
+
+    @media (max-width: 500px) {
+        img {
+            width: 100% !important;
+        }
+    }
 }

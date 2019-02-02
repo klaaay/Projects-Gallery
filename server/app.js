@@ -42,6 +42,8 @@ var navbarInfo = classifys.sort().map((item, index) => {
 classifys.sort().forEach(async (classify, index_classify) => {
     fs.readdirSync(`./data/${classify}`).filter(project => (project.slice(-4) !== ".png")).map((project, index_project) => {
         var description = fs.readFileSync(`./data/${classify}/${project}/description.txt`);
+        var birthtime = fs.statSync(`./data/${classify}/${project}/description.txt`).birthtimeMs;
+        // console.log(time.birthtimeMs)
         var file_items = fs.readdirSync(`./data/${classify}/${project}`);
         var pic = [];
         var video = [];
@@ -72,6 +74,8 @@ classifys.sort().forEach(async (classify, index_classify) => {
         var project_item = {
             info: {
                 title: `${project}`,
+                birthtime: birthtime,
+                classify:index_classify,
                 description: description.toString(),
                 pic: `${DOMAIN}:${SERVER_PORT}/${INIT_URL}/${classify}/${project}/img/cover.jpg`,
                 page: Math.floor(index_project / 8) + 1,

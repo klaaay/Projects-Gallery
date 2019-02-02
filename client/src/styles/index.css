@@ -1,6 +1,10 @@
+html {
+  font-size: 16px;
+}
+
 #root {
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 #root .App {
@@ -10,4 +14,5 @@
 #root .App .ant-layout {
   height: 100%;
 }
+
 /*# sourceMappingURL=index.css.map */
