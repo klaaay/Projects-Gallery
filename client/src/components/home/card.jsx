@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-
 import "./styles/card.css";
 
 import Dotdotdot from "react-dotdotdot";

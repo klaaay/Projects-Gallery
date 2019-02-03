@@ -1,5 +1,6 @@
 const express = require("express");
 const fs = require("fs");
+const cors = require('cors')
 const app = express();
 
 const {
@@ -17,17 +18,9 @@ for (let i = 0; i < projectsDataLength; i++) {
     projectsData["classify" + i] = [];
 }
 
-app.use('/data', express.static('data'));
+app.use(cors())
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    if (req.method == 'OPTIONS') {
-        return res.sendStatus(200);
-    }
-    next();
-})
+app.use('/data', express.static('data'));
 
 var classifys = fs.readdirSync("./data");
 
@@ -75,7 +68,7 @@ classifys.sort().forEach(async (classify, index_classify) => {
             info: {
                 title: `${project}`,
                 birthtime: birthtime,
-                classify:index_classify,
+                classify: index_classify,
                 description: description.toString(),
                 pic: `${DOMAIN}:${SERVER_PORT}/${INIT_URL}/${classify}/${project}/img/cover.jpg`,
                 page: Math.floor(index_project / 8) + 1,

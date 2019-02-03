@@ -37,7 +37,7 @@
   }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 500px) {
   .projects .project-item {
     -ms-flex-preferred-size: 100%;
         flex-basis: 100%;

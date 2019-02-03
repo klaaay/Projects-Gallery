@@ -1,3 +1,3 @@
 export default {
-    INFO_API: "http://localhost:3030"
+    INFO_API: "http://119.23.201.7:3030"
 }

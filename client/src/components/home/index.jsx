@@ -56,7 +56,10 @@ export default class main extends Component {
 
   componentDidMount = () => {
     document.body.addEventListener("touchstart", function() {});
-   
+    $(window).resize(e => {
+      window.location.reload();
+    });
+
     axios.get(config.INFO_API).then(res => {
       data = res.data;
       let allProjects = [];
@@ -79,21 +82,29 @@ export default class main extends Component {
       });
     });
 
-    $(".my-card").css("height", Math.floor(($(window).height() - 470) / 2));
-    $(".card-info").css(
-      "top",
-      Math.floor(($(window).height() - 470) / 2) * -1 + "px"
-    );
-    this.cardInfoAnimation();
+    if ($(window).width() >= 450) {
+      $(".my-card").css("height", Math.floor(($(window).height() - 470) / 2));
+      $(".card-info").css(
+        "top",
+        Math.floor(($(window).height() - 470) / 2) * -1 + "px"
+      );
+      this.cardInfoAnimation();
+    }
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    $(".my-card").css("height", Math.floor(($(window).height() - 470) / 2));
-    $(".card-info").css(
-      "top",
-      Math.floor(($(window).height() - 470) / 2) * -1 + "px"
-    );
-    this.cardInfoAnimation();
+    $(window).resize(e => {
+      window.location.reload();
+    });
+    
+    if ($(window).width() >= 450) {
+      $(".my-card").css("height", Math.floor(($(window).height() - 470) / 2));
+      $(".card-info").css(
+        "top",
+        Math.floor(($(window).height() - 470) / 2) * -1 + "px"
+      );
+      this.cardInfoAnimation();
+    }
   };
 
   state = {
