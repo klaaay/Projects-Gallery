@@ -56,9 +56,9 @@ export default class main extends Component {
 
   componentDidMount = () => {
     document.body.addEventListener("touchstart", function() {});
-    $(window).resize(e => {
-      window.location.reload();
-    });
+    // $(window).resize(e => {
+    //   window.location.reload();
+    // });
 
     axios.get(config.INFO_API).then(res => {
       data = res.data;
@@ -93,10 +93,10 @@ export default class main extends Component {
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    $(window).resize(e => {
-      window.location.reload();
-    });
-    
+    // $(window).resize(e => {
+    //   window.location.reload();
+    // });
+
     if ($(window).width() >= 450) {
       $(".my-card").css("height", Math.floor(($(window).height() - 470) / 2));
       $(".card-info").css(

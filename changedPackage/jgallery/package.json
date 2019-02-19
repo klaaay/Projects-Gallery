@@ -1,0 +1,49 @@
+{
+  "_from": "jgallery",
+  "_id": "jgallery@2.0.1",
+  "_inBundle": false,
+  "_integrity": "sha1-Yd6Y2WPFT2vEkAEB08HFHStxjhE=",
+  "_location": "/jgallery",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "jgallery",
+    "name": "jgallery",
+    "escapedName": "jgallery",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "http://registry.npm.taobao.org/jgallery/download/jgallery-2.0.1.tgz",
+  "_shasum": "61de98d963c54f6bc4900101d3c1c51d2b718e11",
+  "_spec": "jgallery",
+  "_where": "D:\\项目\\project-show",
+  "author": {
+    "name": "Jakub Kowalczyk"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "JGallery",
+  "devDependencies": {
+    "ts-loader": "^5.3.2",
+    "typescript": "^3.1.6",
+    "webpack": "^4.28.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.14",
+    "wrapper-webpack-plugin": "^2.1.0"
+  },
+  "license": "MIT",
+  "main": "dist/js/jgallery.js",
+  "name": "jgallery",
+  "scripts": {
+    "build": "webpack && webpack --output-filename jgallery.min.js -p",
+    "start": "webpack-dev-server"
+  },
+  "types": "types/index.d.ts",
+  "version": "2.0.1"
+}
